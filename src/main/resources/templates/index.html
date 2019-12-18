@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Springboot</title>
+    <meta charset="utf-8" />
+    <link th:href="@{/css/new-design.css}" rel="stylesheet" type="text/css"></link>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">販売中のネコの一覧</th>
+                <th scope="col">特徴</th>
+                <th scope="col">価格(円)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cat : ${cats}" th:object="${cat}">
+                <td><img th:src="@{/images/{image}(image=*{imagethumburl})}" class="txt"></td>
+                <td th:text="*{name}" class="txt"></td>
+                <td th:text="*{price}" class="price"></td>
+            </tr>
+        </tbody>
+
+    </table>
+</body>
+</html>
