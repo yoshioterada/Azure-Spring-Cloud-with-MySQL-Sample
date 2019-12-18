@@ -24,8 +24,8 @@ jobs:
     - name: Install Azure Spring Cloud extension
       run: az extension add -y --source https://azureclitemp.blob.core.windows.net/spring-cloud/spring_cloud-0.1.0-py2.py3-none-any.whl
     - name: Get Un Active Service Name 
-      run: echo ::set-env name=UNACTIVE_SERVICE::$(az spring-cloud app deployment list -g Spring-Cloud-Asia -s springcloudyoshio --app petcatalog-service  -o json |  jq -c '.[]| [.name, .properties.active]' | grep false | awk -F'["]' '{print $2}')
+      run: echo ::set-env name=UNACTIVE_SERVICE::$(az spring-cloud app deployment list -g Spring-Cloud-Services -s spring-cloud-services-jp --app petstore-app  -o json |  jq -c '.[]| [.name, .properties.active]' | grep false | awk -F'["]' '{print $2}')
     - name: Delete UnActive Service 
-      run: az spring-cloud app deployment delete -n ${{env.UNACTIVE_SERVICE}} -g Spring-Cloud-Asia -s springcloudyoshio --app petcatalog-service
+      run: az spring-cloud app deployment delete -n ${{env.UNACTIVE_SERVICE}} -g Spring-Cloud-Services -s spring-cloud-services-jp --app petstore-app
     - name: Deploy to Azure Spring Cloud
-      run: az spring-cloud app deployment create --resource-group Spring-Cloud-Asia --service springcloudyoshio --name green-${{env.DATE}}-${{env.GIT_SHORT_VERSION}} --version ${{env.DATE}}-${{env.GIT_SHORT_VERSION}} --app petcatalog-service --jar-path target/demo-0.0.1-SNAPSHOT.jar
+      run: az spring-cloud app deployment create -g Spring-Cloud-Services -s spring-cloud-services-jp --name green-${{env.DATE}}-${{env.GIT_SHORT_VERSION}} --version ${{env.DATE}}-${{env.GIT_SHORT_VERSION}} --app petstore-app --jar-path target/demo-0.0.1-SNAPSHOT.jar
